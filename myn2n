@@ -14,10 +14,10 @@ use MYDan::Util::OptConf;
 $| ++;
 
 my $option = MYDan::Util::OptConf->load();
-my %o = $option->set( port => 9999 )->get( qw( port=i ) )->dump();
+my %o = $option->set( port => 9999, server => 'localhost:22,localhost:2222'  )->get( qw( port=i server=s ) )->dump();
 
 $0 = 'myn2n';
 
-my @server = ( "localhost:22" ); 
+my @server = split /,/, $o{server};
 
 MYN2N->new( %o, server => \@server )->run();
